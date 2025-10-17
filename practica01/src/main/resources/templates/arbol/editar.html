@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragments/plantilla :: head}"></head>
+    <body>
+        <header th:replace="~{fragments/plantilla :: header}"></header>
+
+        <div class="container mt-4">
+            <h2 class="mb-4">
+                <i class="bi bi-pencil-square"></i> Modificar Árbol
+            </h2>
+
+            <div class="card">
+                <div class="card-body">
+                    <form th:action="@{/arbol/guardar}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="idArbol" th:value="${arbol.idArbol}"/>
+                        <input type="hidden" name="rutaImagen" th:value="${arbol.rutaImagen}"/>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nombreComun" class="form-label">Nombre Común *</label>
+                                <input type="text" class="form-control" id="nombreComun" 
+                                       name="nombreComun" th:value="${arbol.nombreComun}" required/>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="tipoFlor" class="form-label">Tipo de Flor</label>
+                                <input type="text" class="form-control" id="tipoFlor" 
+                                       name="tipoFlor" th:value="${arbol.tipoFlor}"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="durezaMadera" class="form-label">Dureza de Madera</label>
+                                <select class="form-select" id="durezaMadera" name="durezaMadera">
+                                    <option value="">Seleccione...</option>
+                                    <option value="Muy blanda" th:selected="${arbol.durezaMadera == 'Muy blanda'}">Muy blanda</option>
+                                    <option value="Blanda" th:selected="${arbol.durezaMadera == 'Blanda'}">Blanda</option>
+                                    <option value="Media" th:selected="${arbol.durezaMadera == 'Media'}">Media</option>
+                                    <option value="Dura" th:selected="${arbol.durezaMadera == 'Dura'}">Dura</option>
+                                    <option value="Muy dura" th:selected="${arbol.durezaMadera == 'Muy dura'}">Muy dura</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="alturaMaxima" class="form-label">Altura Máxima (metros)</label>
+                                <input type="number" step="0.01" class="form-control" 
+                                       id="alturaMaxima" name="alturaMaxima" 
+                                       th:value="${arbol.alturaMaxima}"/>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Imagen Actual</label>
+                            <div>
+                                <img th:if="${arbol.rutaImagen != null and !arbol.rutaImagen.isEmpty()}" 
+                                     th:src="${arbol.rutaImagen}" 
+                                     alt="Imagen actual" 
+                                     style="max-width: 200px; max-height: 200px;"
+                                     class="img-thumbnail"/>
+                                <p th:if="${arbol.rutaImagen == null or arbol.rutaImagen.isEmpty()}" 
+                                   class="text-muted">Sin imagen</p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="imagenFile" class="form-label">Cambiar Imagen (opcional)</label>
+                            <input type="file" class="form-control" id="imagenFile" 
+                                   name="imagenFile" accept="image/*"/>
+                            <small class="form-text text-muted">
+                                Deje vacío si no desea cambiar la imagen
+                            </small>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a th:href="@{/arbol/listado}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="bi bi-save"></i> Actualizar Árbol
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{fragments/plantilla :: footer}"></footer>
+    </body>
+</html>
